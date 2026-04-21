@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import User
 from .forms import UserForm
+from .decorators import login_required
 
 
+@login_required
 def index(request):
     if not request.session.get('user_id'):
         return redirect('/login/')
@@ -11,7 +13,7 @@ def index(request):
     username = request.session.get('login')
     return render(request, "base.html", {'username': username})
 
-
+@login_required
 def users(request):
     users = User.objects.all()
     return render(request, "users.html", {'users': users})

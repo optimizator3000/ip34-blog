@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>{% block title %}Главная страница{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
 </head>
 <body>
@@ -14,17 +14,19 @@
                 <a href="/">Главная</a>
                 <a href="/users">Пользователи</a>
                 <a href="/add_user">Регистрация</a>
-                <a href="/login">Вход</a>
+                <a href="/login/">Вход</a>
                 <a href="/logout/">Выйти</a>
             </div>
         </div>
 
         <div id="content">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Создать">
-            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}{% endblock content %}
         </div>
 
         <div id="footer"></div>
